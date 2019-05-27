@@ -1,0 +1,24 @@
+{
+  "name": "wxweb",
+  "version": "1.0.0",
+  "description": "A thirty party web client for WeChat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laphylee/wxWeb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laphylee/wxWeb/issues"
+  },
+  "homepage": "https://github.com/laphylee/wxWeb#readme",
+  "dependencies": {
+    "express": "^4.17.0",
+    "qrcode-terminal": "^0.12.0",
+    "wechaty": "^0.26.1"
+  }
+}
