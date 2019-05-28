@@ -1,5 +1,6 @@
 const { Wechaty } = require('wechaty')
 const express = require('express')
+const fs = require('fs')
 const app = express()
 
 
@@ -23,11 +24,28 @@ function onLogout(user) {
 }
 
 async function onMessage (msg) {
-  var text = msg.text();
-  console.log(`From: ${msg.from().name()} To: ${msg.to().name()} Message: ${text}`);
-  if(text=="ding") {
+  var type = msg.type();
+  var text = msg.text().substring(0,100);
+  var from = msg.from();
+  var fromName = from==null?"":from.name();
+  var room = msg.room();
+  var toName = "";
+  if(room==null) {
+      var to = msg.to();
+      if(to!=null) {
+        toName = to.name();
+      }
+  } else {
+    toName = await room.topic();
+  }
+  fs.appendFile(
+    'wechat.log', 
+    `Date: ${msg.date().toLocaleString()} From: ${fromName} To: ${toName} Type: ${type} Message: ${text}\n`,
+    function(err) { if(err) console.log(err.message); }
+  );
+
+  if(!msg.self() && text=="ding") {
       await msg.say("dong");
-      
   }
 }
 
@@ -59,5 +77,5 @@ app.get('/', (req, res) => {
 
 });
 
-var port = 8000;
+var port = 8080;
 app.listen(port, () => console.log("App listening on port %d!", port))
